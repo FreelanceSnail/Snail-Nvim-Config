@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-REPO="${REPO:-https://github.com/<你的用户名>/nvim-config.git}"
+REPO="${REPO:-https://github.com/FreelanceSnail/Snail-Nvim-Config.git}"
 NVIM_DIR="${NVIM_DIR:-$HOME/.config/nvim}"
 
 echo "[1/5] 安装基础依赖..."
