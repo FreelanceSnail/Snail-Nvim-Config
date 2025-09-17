@@ -69,7 +69,7 @@ nvim --headless +"lua \
   if ok then \
     vim.cmd([[MasonInstall \
       lua-language-server pyright typescript-language-server clojure-lsp \
-      stylua black isort prettierd clj-kondo]]); \
+      stylua black isort prettierd clj-kondo cljfmt]]); \
   else \
     print('mason 未就绪（可能由懒加载触发条件限制），将由首次启动时自动安装'); \
   end" +qa
