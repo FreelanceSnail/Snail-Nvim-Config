@@ -17,5 +17,5 @@
 ## 一键安装脚本
 
 ```bash
-bash -c "$(curl -fsSL https://github.com/FreelanceSnail/Snail-Nvim-Config.git/main/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/FreelanceSnail/Snail-Nvim-Config/main/install.sh)"
 ```
