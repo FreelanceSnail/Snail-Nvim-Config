@@ -4,7 +4,7 @@ return {
 build = ":TSUpdate",
 event = { "BufReadPost", "BufNewFile" },
 config = function()
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter").setup({
 ensure_installed = { "lua", "python", "javascript", "typescript", "clojure" },
 highlight = { enable = true },
 indent = { enable = true },
