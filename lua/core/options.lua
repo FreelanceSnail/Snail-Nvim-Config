@@ -1,5 +1,10 @@
--- 让 Neovim 能找到 nvm 的全局可执行文件
-vim.env.PATH = "/home/lvxj/.nvm/versions/node/v22.17.0/bin:" .. vim.env.PATH
+-- Let Neovim find global executables installed by nvm on Unix-like systems.
+if vim.fn.has("win32") == 0 then
+  vim.env.PATH = "/home/lvxj/.nvm/versions/node/v22.17.0/bin:" .. vim.env.PATH
+elseif vim.fn.executable("gcc") == 1 then
+  vim.env.CC = "gcc"
+  vim.env.CXX = "g++"
+end
 
 -- 基础选项
 local o = vim.opt
