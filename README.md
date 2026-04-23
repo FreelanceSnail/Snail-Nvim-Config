@@ -20,6 +20,22 @@
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/FreelanceSnail/Snail-Nvim-Config/main/install.sh)"
 ```
 
+## Linux / macOS 手动安装
+
+```bash
+git clone https://github.com/FreelanceSnail/Snail-Nvim-Config.git ~/.config/nvim
+```
+
+首次启动 Neovim 后执行：
+
+```vim
+:Lazy sync
+:MasonInstall lua-language-server pyright typescript-language-server clojure-lsp stylua black isort prettierd clj-kondo cljfmt
+:TSInstall lua python javascript typescript clojure
+```
+
+> 由于 nvim-treesitter v1.0+ 不再支持 `ensure_installed` 自动安装，parser 需要手动通过 `:TSInstall` 安装。
+
 ## Windows 安装
 
 先安装 Neovim 和外部命令行依赖：
@@ -39,18 +55,15 @@ winget install --id charmbracelet.glow -e
 git clone https://github.com/FreelanceSnail/Snail-Nvim-Config.git "$env:LOCALAPPDATA\nvim"
 ```
 
-首次启动后同步插件和 Mason 工具：
+首次启动后同步插件、Mason 工具和 Treesitter parser：
 
 ```vim
 :Lazy sync
 :MasonInstall lua-language-server pyright typescript-language-server clojure-lsp stylua black isort prettierd clj-kondo cljfmt
-```
-
-如果 Treesitter parser 没有自动安装，可以在 Neovim 里执行：
-
-```vim
 :TSInstall lua python javascript typescript clojure
 ```
+
+> 由于 nvim-treesitter v1.0+ 不再支持 `ensure_installed` 自动安装，parser 需要手动通过 `:TSInstall` 安装。
 
 不要把这些本机生成目录提交进仓库：
 
