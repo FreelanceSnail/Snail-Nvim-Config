@@ -30,7 +30,7 @@ else
   exit 1
 fi
 
-echo "[2/7] 加载 nvm Node 环境（用于 Mason 安装 Node 系 LSP/格式化器）..."
+echo "[2/7] 加载 nvm Node 环境并安装 tree-sitter-cli..."
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
   export NVM_DIR="$HOME/.nvm"
   # shellcheck source=/dev/null
@@ -41,6 +41,14 @@ elif have_cmd node; then
   echo "    未检测到 nvm，但系统 Node 可用: $(node --version)"
 else
   echo "    警告：未检测到 nvm 或 Node，JS/TS 相关 LSP/格式化器可能无法安装。" >&2
+fi
+
+# tree-sitter CLI 是 nvim-treesitter v1.0+ 编译 parser 的必需工具
+if have_cmd npm; then
+  echo "    正在安装/更新 tree-sitter-cli..."
+  npm install -g tree-sitter-cli >/dev/null 2>&1 || echo "    警告：tree-sitter-cli 安装失败，parser 可能无法编译" >&2
+else
+  echo "    警告：未找到 npm，无法安装 tree-sitter-cli。" >&2
 fi
 
 echo "[3/7] 检查 Neovim 版本..."
