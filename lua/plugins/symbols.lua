@@ -5,7 +5,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-    cmd = { "AerialToggle", "AerialToggle!" },
+    cmd = { "AerialToggle" },
     keys = {
       { "<leader>so", "<cmd>AerialToggle!<CR>", desc = "Symbols outline" },
     },
