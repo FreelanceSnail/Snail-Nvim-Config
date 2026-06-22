@@ -119,11 +119,18 @@ sudo apt install sbcl
 ```
 
 ### 快捷键
-- `<Space> rr`：连接/断开 SWANK（`:VlimeConnect`）
-- `<Space> rf`：加载当前 Lisp 文件（`:VlimeLoadFile`）
-- `<Space> rq`：关闭 SWANK 连接（`:VlimeClose`）
+已配置 vlime 使用 `<Space>` 作为 leader，常用快捷键：
 
-vlime 加载后还会提供大量默认快捷键用于求值、宏展开、查看变量等。
+- `<Space> rr`：连接 SWANK 服务器
+- `<Space> rf`：编译当前 Lisp 文件
+- `<Space> rq`：关闭当前 SWANK 连接
+- `<Space> re`：发送当前顶层表达式到 REPL
+- `<Space> st`：发送顶层表达式到 REPL（vlime 默认）
+- `<Space> ss`：发送当前表达式/原子到 REPL
+- `<Space> cc`：连接服务器（vlime 默认）
+- `<Space> cd`：断开连接
+
+vlime 还提供大量默认快捷键用于宏展开、交叉引用、查看文档等，在 Lisp buffer 中按 `<Space> ?` 查看完整参考。
 
 ---
 
