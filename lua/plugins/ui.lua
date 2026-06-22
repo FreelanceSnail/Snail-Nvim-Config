@@ -4,7 +4,7 @@ return {
 dependencies = { "nvim-tree/nvim-web-devicons" },
 event = "VeryLazy",
 config = function()
-require("lualine").setup({ options = { theme = "auto" } })
+require("lualine").setup({ options = { theme = "auto", icons_enabled = false } })
 end,
 },
 }

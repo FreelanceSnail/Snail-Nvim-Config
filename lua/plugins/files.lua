@@ -13,6 +13,16 @@ return {
 					dotfiles = false, -- 如需显示点文件
 					git_ignored = false, -- 新版字段：不隐藏 .gitignore 项
 				},
+				renderer = {
+					icons = {
+						show = {
+							file = false,
+							folder = false,
+							folder_arrow = false,
+							git = false,
+						},
+					},
+				},
 			})
 		end,
 	},
