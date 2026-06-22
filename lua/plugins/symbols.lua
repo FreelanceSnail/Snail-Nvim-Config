@@ -1,12 +1,23 @@
 return {
-{
-"simrat39/symbols-outline.nvim",
-cmd = "SymbolsOutline",
-keys = {
-{ "<leader>so", "<cmd>SymbolsOutline<CR>", desc = "Symbols outline" },
-},
-config = function()
-require("symbols-outline").setup({})
-end,
-},
+  {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    keys = {
+      { "<leader>so", "<cmd>AerialToggle!<CR>", desc = "Symbols outline" },
+    },
+    config = function()
+      require("aerial").setup({
+        layout = {
+          max_width = { 40, 0.3 },
+          width = nil,
+          min_width = 20,
+        },
+        attach_mode = "global",
+        show_guides = true,
+      })
+    end,
+  },
 }

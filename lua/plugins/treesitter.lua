@@ -4,7 +4,7 @@ return {
     build = ":TSUpdate",
     lazy = false,
     config = function()
-      local languages = { "lua", "python", "javascript", "typescript", "clojure" }
+      local languages = { "lua", "python", "javascript", "typescript", "clojure", "commonlisp", "markdown", "markdown_inline" }
 
       local ok, configs = pcall(require, "nvim-treesitter.configs")
       if ok then

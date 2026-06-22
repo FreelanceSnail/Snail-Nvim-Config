@@ -1,7 +1,21 @@
 -- Let Neovim find global executables installed by nvm on Unix-like systems.
 if vim.fn.has("win32") == 0 then
-  vim.env.PATH = "/home/lvxj/.nvm/versions/node/v22.17.0/bin:" .. vim.env.PATH
-elseif vim.fn.executable("gcc") == 1 then
+  local nvm_dir = vim.env.HOME .. "/.nvm"
+  local nvm_sh = nvm_dir .. "/nvm.sh"
+  if vim.fn.filereadable(nvm_sh) == 1 then
+    local nvm_path = vim.fn.system({
+      "bash",
+      "-c",
+      "export NVM_DIR=" .. nvm_dir .. " && source " .. nvm_sh .. " && echo $PATH",
+    })
+    nvm_path = nvm_path:gsub("%s+$", "")
+    if nvm_path ~= "" then
+      vim.env.PATH = nvm_path
+    end
+  end
+end
+
+if vim.fn.executable("gcc") == 1 then
   vim.env.CC = "gcc"
   vim.env.CXX = "g++"
 end

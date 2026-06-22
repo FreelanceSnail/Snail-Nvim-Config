@@ -14,7 +14,7 @@ ver_ge() {
   [ "$(printf '%s\n' "$b" "$a" | sort -V | head -n1)" = "$b" ]
 }
 
-echo "[1/6] 安装基础依赖..."
+echo "[1/7] 安装基础依赖..."
 if have_cmd apt; then
   sudo apt update
   sudo apt install -y git curl ripgrep fd-find universal-ctags neovim
@@ -30,7 +30,20 @@ else
   exit 1
 fi
 
-echo "[2/6] 检查 Neovim 版本..."
+echo "[2/7] 加载 nvm Node 环境（用于 Mason 安装 Node 系 LSP/格式化器）..."
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  # shellcheck source=/dev/null
+  . "$NVM_DIR/nvm.sh"
+  nvm use default >/dev/null 2>&1 || true
+  echo "    已加载 Node: $(node --version 2>/dev/null || echo 'unknown')"
+elif have_cmd node; then
+  echo "    未检测到 nvm，但系统 Node 可用: $(node --version)"
+else
+  echo "    警告：未检测到 nvm 或 Node，JS/TS 相关 LSP/格式化器可能无法安装。" >&2
+fi
+
+echo "[3/7] 检查 Neovim 版本..."
 if ! have_cmd nvim; then
   echo "未找到 nvim，可执行文件未安装或 PATH 未配置。" >&2
   exit 1
@@ -41,10 +54,10 @@ NVIM_VER="${NVIM_VER_RAW:-0.0.0}"
 echo "检测到 nvim 版本: $NVIM_VER (需要 >= $REQUIRED_NVIM)"
 
 if ! ver_ge "$NVIM_VER" "$REQUIRED_NVIM"; then
-  echo "Neovim 版本过低，请在Github上下载最新的Neovim Appimage，添加可执行权限，并移动到/usr/local/bin/nvim。"
+  echo "Neovim 版本过低，请在 Github 上下载最新的 Neovim Appimage，添加可执行权限，并移动到 /usr/local/bin/nvim。"
 fi
 
-echo "[3/6] 克隆/更新 nvim 配置..."
+echo "[4/7] 克隆/更新 nvim 配置..."
 if [ -d "$NVIM_DIR/.git" ]; then
   git -C "$NVIM_DIR" pull --rebase
 else
@@ -52,17 +65,27 @@ else
   git clone "$REPO" "$NVIM_DIR"
 fi
 
-echo "[4/6] 同步插件（lazy）..."
+echo "[5/7] 同步插件（lazy）..."
 # 单次 headless 同步，若首次装插件，lazy 会自动完成下载
 nvim --headless "+Lazy! sync" "+qa"
 
-echo "[5/6] Treesitter 语法高亮安装/更新（headless-safe）..."
+echo "[6/7] Treesitter 语法高亮安装/更新（headless-safe）..."
 # 使用 Lua API，避免在 headless + 懒加载下 :TSUpdateSync 未注册的问题
 nvim --headless +"lua \
   local ok,inst = pcall(require,'nvim-treesitter.install'); \
   if ok then inst.update({with_sync=true})(); else print('nvim-treesitter 未就绪'); end" +qa
 
-echo "[6/6] 用 Mason 安装 LSP/格式化器..."
+# 显式确保新增 parser 已安装（v1.0+ ensure_installed 行为变化，手动兜底）
+nvim --headless +"lua \
+  local ok,ts = pcall(require,'nvim-treesitter.install'); \
+  if ok then \
+    for _,lang in ipairs({'commonlisp','markdown','markdown_inline'}) do \
+      local ok2 = pcall(ts.ensure_installed, lang); \
+      if not ok2 then print('parser 安装失败或已存在: '..lang); end \
+    end \
+  end" +qa
+
+echo "[7/7] 用 Mason 安装 LSP/格式化器..."
 # 先确保 mason 已加载，再执行 MasonInstall（若已安装会跳过）
 nvim --headless +"lua \
   local ok = pcall(require,'mason'); \
@@ -74,4 +97,10 @@ nvim --headless +"lua \
     print('mason 未就绪（可能由懒加载触发条件限制），将由首次启动时自动安装'); \
   end" +qa
 
+echo ""
 echo "✅ 安装完成。首次启动 nvim 时会自动加载你的配置。"
+echo ""
+echo "后续提示："
+echo "  - 若某些 parser 未自动安装，可在 nvim 内执行 :TSInstall commonlisp markdown markdown_inline"
+echo "  - 若某些 Mason 工具未自动安装，可在 nvim 内执行 :Mason"
+echo "  - Common Lisp REPL 需要本地安装 SBCL + quicklisp + swank，vlime 才能连接"

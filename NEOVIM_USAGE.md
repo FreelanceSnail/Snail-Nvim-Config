@@ -1,4 +1,4 @@
-# Neovim 插件使用说明（Lua / Python / JS-TS / Clojure 配置）
+# Neovim 插件使用说明（Lua / Python / JS-TS / Clojure / Common Lisp 配置）
 
 ## 🌳 文件树 — nvim-tree
 - 打开/关闭文件树：`<Space> e`
@@ -12,7 +12,7 @@
 ## 🖥️ 内置终端 — toggleterm
 - 打开/关闭浮动终端：`<Space> t`
 - 在终端模式里 `<Space> t` 也能切回
-- `<Esc>` 或 `Ctrl + \` Ctrl + n`：从终端回到 Normal 模式
+- `<Esc>` 或 `Ctrl + \` `Ctrl + n`：从终端回到 Normal 模式
 
 ---
 
@@ -25,7 +25,7 @@
 ---
 
 ## 🌈 语法高亮 — treesitter
-- 自动启用：支持 **Lua / Python / JavaScript / TypeScript / Clojure**
+- 自动启用：支持 **Lua / Python / JavaScript / TypeScript / Clojure / Common Lisp / Markdown**
 - 提供更精准的语法高亮和缩进
 - 更新语法库：`:TSUpdate`
 
@@ -50,7 +50,7 @@
 
 ---
 
-## 📑 符号大纲 — symbols-outline
+## 📑 符号大纲 — aerial.nvim
 - 打开/关闭大纲：`<Space> so`
 - 在侧边栏显示当前 buffer 的函数/变量结构
 - 回车：跳转到对应定义
@@ -88,11 +88,50 @@
 
 ---
 
+## 🧩 Common Lisp 开发环境 — vlime
+
+### 前置依赖
+需要本地安装 Common Lisp 实现、quicklisp 和 swank，例如：
+
+```bash
+# Ubuntu/Debian
+sudo apt install sbcl
+```
+
+安装 quicklisp 后，在 `~/.sbclrc` 中加载 swank：
+
+```lisp
+(load "~/quicklisp/setup.lisp")
+(ql:quickload :swank)
+```
+
+启动 swank 服务器（在终端中）：
+
+```lisp
+(swank:create-server :port 4005 :dont-close t)
+```
+
+### 快捷键
+- `<Space> rr`：连接/断开 SWANK（`:VlimeConnect`）
+- `<Space> rf`：加载当前 Lisp 文件（`:VlimeLoadFile`）
+- `<Space> rq`：关闭 SWANK 连接（`:VlimeClose`）
+
+vlime 加载后还会提供大量默认快捷键用于求值、宏展开、查看变量等。
+
+---
+
+## ✨ Markdown 预览 — glow.nvim
+- 打开/关闭预览：`<Space> g`
+- 第一次按：执行 `:Glow`，在 Neovim 内部渲染 Markdown
+- 再次按：检测到 Glow buffer 已存在 → 自动关闭
+
+---
+
 ## 🔑 常用快捷键总览
 | 功能             | 快捷键             |
 |------------------|--------------------|
 | 文件树           | `<Space> e`        |
-| 内置终端         | `Ctrl + \``        |
+| 内置终端         | `<Space> t`        |
 | 搜索文件         | `<Space> ff`       |
 | 搜索文本         | `<Space> fg`       |
 | 搜索缓冲区       | `<Space> fb`       |
@@ -107,10 +146,7 @@
 | 触发补全         | `Ctrl + Space`     |
 | 确认补全         | `Enter`            |
 | 补全切换         | `Tab` / `Shift-Tab`|
-
----
-
-## ✨ Markdown 预览 — glow.nvim
-- 打开/关闭预览：`<Space> g`
-- 第一次按：执行 `:Glow`，在 Neovim 内部渲染 Markdown
-- 再次按：检测到 Glow buffer 已存在 → 自动关闭
+| Markdown 预览    | `<Space> g`        |
+| CL 连接 SWANK    | `<Space> rr`       |
+| CL 加载文件      | `<Space> rf`       |
+| CL 关闭连接      | `<Space> rq`       |
