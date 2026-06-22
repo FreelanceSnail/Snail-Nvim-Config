@@ -2,6 +2,10 @@ return {
   {
     "vlime/vlime",
     ft = { "lisp", "commonlisp" },
+    init = function(plugin)
+      -- vlime 的 Vim 插件文件位于仓库的 vim/ 子目录
+      vim.opt.rtp:append(plugin.dir .. "/vim")
+    end,
     config = function()
       -- 启用自动文档与包名显示
       vim.g.vlime_enable_autodoc = 1
