@@ -7,20 +7,30 @@ return {
       local formatting  = null_ls.builtins.formatting
       local diagnostics = null_ls.builtins.diagnostics
 
-      null_ls.setup({
-        sources = {
-          -- Lua
-          formatting.stylua,
-          -- Python
-          formatting.black.with({ extra_args = { "--fast" } }),
-          formatting.isort,
-          -- JS/TS/JSON/MD/CSS/HTML 等
-          formatting.prettierd,
-          -- Clojure
-          diagnostics.clj_kondo,
-          formatting.cljfmt,  -- 你安装的
-        },
-      })
+      local sources = {
+        -- Lua
+        formatting.stylua,
+        -- JS/TS/JSON/MD/CSS/HTML 等
+        formatting.prettierd,
+      }
+
+      -- Python（若未安装 black/isort，可运行 `apt install python3-venv` 后通过 Mason 安装）
+      if vim.fn.executable("black") == 1 then
+        table.insert(sources, formatting.black.with({ extra_args = { "--fast" } }))
+      end
+      if vim.fn.executable("isort") == 1 then
+        table.insert(sources, formatting.isort)
+      end
+
+      -- Clojure
+      if vim.fn.executable("clj-kondo") == 1 then
+        table.insert(sources, diagnostics.clj_kondo)
+      end
+      if vim.fn.executable("cljfmt") == 1 then
+        table.insert(sources, formatting.cljfmt)
+      end
+
+      null_ls.setup({ sources = sources })
 
       -- 保存自动格式化
       local aug = vim.api.nvim_create_augroup("FormatOnSave", {})

@@ -79,6 +79,13 @@
 - **JS/TS 等**：`prettierd`
 - **Clojure**：`cljfmt`、`clj-kondo`
 
+**Python 格式化器前置依赖（Ubuntu/Debian）：**
+Mason 安装 `black` / `isort` 需要系统具备 `python3-venv`，若缺失请先安装：
+```bash
+sudo apt install python3-venv
+```
+然后进入 nvim 执行 `:MasonInstall black isort`。
+
 **使用方式：**
 - 保存时自动格式化（Format on Save）
 - 手动触发：

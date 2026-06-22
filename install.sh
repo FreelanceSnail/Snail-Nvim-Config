@@ -17,7 +17,7 @@ ver_ge() {
 echo "[1/7] 安装基础依赖..."
 if have_cmd apt; then
   sudo apt update
-  sudo apt install -y git curl ripgrep fd-find universal-ctags neovim
+  sudo apt install -y git curl ripgrep fd-find universal-ctags neovim python3-venv
   # 统一 fd 命令名（Ubuntu 下叫 fdfind）
   if have_cmd fdfind; then
     sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
