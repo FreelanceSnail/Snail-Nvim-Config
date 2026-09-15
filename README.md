@@ -2,7 +2,7 @@
 
 ## 介绍
 
-花了一个晚上用ChatGPT帮我配置的支持Lua/Python/JS-TS/Clojure的Neovim插件配置。
+花了一个晚上用ChatGPT帮我配置的支持Lua/Python/JS-TS/Rust/Clojure的Neovim插件配置。
 
 拥有的功能如下：
 
@@ -31,10 +31,12 @@ git clone https://github.com/FreelanceSnail/Snail-Nvim-Config.git ~/.config/nvim
 ```vim
 :Lazy sync
 :MasonInstall lua-language-server pyright typescript-language-server clojure-lsp stylua black isort prettierd clj-kondo cljfmt
-:TSInstall lua python javascript typescript clojure
+:TSInstall lua python javascript typescript rust clojure
 ```
 
 > 由于 nvim-treesitter v1.0+ 不再支持 `ensure_installed` 自动安装，parser 需要手动通过 `:TSInstall` 安装。
+> nvim-treesitter v1.0+ 还需要 `tree-sitter` 命令行工具和 C 编译器；macOS 可运行 `brew install tree-sitter-cli`。
+> Rust 的语言服务器由 rustup 管理，可运行 `rustup component add rust-analyzer` 安装。
 
 ## Windows 安装
 

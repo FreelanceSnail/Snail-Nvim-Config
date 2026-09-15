@@ -39,6 +39,10 @@ return {
             },
           },
         },
+        rust_analyzer = {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        },
         pyright = { on_attach = on_attach, capabilities = capabilities },
         ts_ls = { on_attach = on_attach, capabilities = capabilities },
         clojure_lsp = { on_attach = on_attach, capabilities = capabilities },

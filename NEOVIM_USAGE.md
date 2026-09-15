@@ -1,4 +1,4 @@
-# Neovim 插件使用说明（Lua / Python / JS-TS / Clojure / Common Lisp 配置）
+# Neovim 插件使用说明（Lua / Python / JS-TS / Rust / Clojure / Common Lisp 配置）
 
 ## 🌳 文件树 — nvim-tree
 - 打开/关闭文件树：`<Space> e`
@@ -25,14 +25,19 @@
 ---
 
 ## 🌈 语法高亮 — treesitter
-- 自动启用：支持 **Lua / Python / JavaScript / TypeScript / Clojure / Common Lisp / Markdown**
+- 自动启用：支持 **Lua / Python / JavaScript / TypeScript / Rust / Clojure / Common Lisp / Markdown**
 - 提供更精准的语法高亮和缩进
 - 更新语法库：`:TSUpdate`
 
 ---
 
 ## ⚙️ LSP — mason + lspconfig
-已配置语言服务器：Lua / Python / TS / Clojure
+已配置语言服务器：Lua / Python / TS / Rust / Clojure
+
+Rust 使用 rustup 提供的 `rust-analyzer`，如果尚未安装：
+```bash
+rustup component add rust-analyzer
+```
 
 - 跳转定义：`gd`
 - 查找引用：`gr`
@@ -78,6 +83,7 @@
 - **Python**：`black`、`isort`
 - **JS/TS 等**：`prettierd`
 - **Clojure**：`cljfmt`、`clj-kondo`
+- **Rust**：由 `rust-analyzer` 提供诊断和格式化
 
 **Python 格式化器前置依赖（Ubuntu/Debian）：**
 Mason 安装 `black` / `isort` 需要系统具备 `python3-venv`，若缺失请先安装：
